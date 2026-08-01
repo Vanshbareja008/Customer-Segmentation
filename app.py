@@ -185,52 +185,30 @@ button.primary:hover{
     background:#1B8A5A !important;
 }
 
-/* Developer Card */
-
-.developer-card{
-    margin-top:25px;
-    background:#3A3A3A;
-    border:1px solid #555;
-    border-radius:12px;
-    padding:18px;
-    width:320px;
-    margin-left:auto;
-    margin-right:auto;
-    box-shadow:0 6px 15px rgba(0,0,0,.18);
-}
-
-/* Developer Card */
-
 .developer-card{
     margin-top:25px;
     background:#3B3B3B;
     border-radius:12px;
-    padding:18px;
-    width:330px;
+    padding:20px;
+    width:340px;
     margin:auto;
     border:1px solid #5A5A5A;
+    text-align:center;
 }
 
-/* Developed By */
-
 .dev-label{
-    display:block;
     color:#FFFFFF !important;
     font-size:18px;
     font-weight:700;
     margin-bottom:8px;
 }
 
-/* Name */
-
 .dev-name{
     color:#1B8A5A !important;
     font-size:30px;
     font-weight:700;
-    margin-bottom:15px;
+    margin-bottom:18px;
 }
-
-/* Roll Label */
 
 .roll-label{
     color:#FFFFFF !important;
@@ -238,13 +216,11 @@ button.primary:hover{
     font-weight:700;
 }
 
-/* Roll Number */
-
 .roll-number{
-    color:#FFD54F !important;
-    font-size:22px;
+    color:#FFD700 !important;
+    font-size:28px;
     font-weight:700;
-    margin-left:8px;
+    margin-top:5px;
 }
 
 /* Result */
@@ -283,11 +259,23 @@ with gr.Blocks(
 <h3>Intelligent Customer Cluster Prediction using K-Prototypes</h3>
 
 <div class="developer-card">
-    <span class="dev-label">Developed By</span>
-    <div class="dev-name">Vansh Bareja</div>
 
-    <span class="roll-label">Roll No.</span>
-    <span class="roll-number">241047</span>
+    <div class="dev-label">
+        👨‍💻 Developed By
+    </div>
+
+    <div class="dev-name">
+        Vansh Bareja
+    </div>
+
+    <div class="roll-label">
+        Roll No.
+    </div>
+
+    <div class="roll-number">
+        241047
+    </div>
+
 </div>
 
 </div>
