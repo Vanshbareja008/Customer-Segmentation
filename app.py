@@ -199,12 +199,6 @@ button.primary:hover{
     box-shadow:0 6px 15px rgba(0,0,0,.18);
 }
 
-.developer-card p{
-    color:#DADADA !important;
-    margin:5px 0;
-    font-size:16px;
-}
-
 /* Developer Card */
 
 .developer-card{
