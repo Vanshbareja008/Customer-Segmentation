@@ -96,19 +96,64 @@ def predict_customer(
 # Gradio Interface
 # ==========================
 
-with gr.Blocks(theme=gr.themes.Soft()) as demo:
+css = """
+.gradio-container{
+    background: linear-gradient(135deg,#eef5ff,#f9fbff);
+}
+
+.main-header{
+    background: linear-gradient(90deg,#2563eb,#4f46e5);
+    padding:25px;
+    border-radius:18px;
+    color:white;
+    text-align:center;
+    box-shadow:0px 8px 20px rgba(0,0,0,0.15);
+    margin-bottom:20px;
+}
+
+.section{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    margin-top:15px;
+}
+
+.footer{
+    text-align:center;
+    color:#666;
+    padding:20px;
+}
+
+.result-box textarea{
+    font-size:22px !important;
+    font-weight:bold;
+    color:#0f766e !important;
+}
+"""
+
+with gr.Blocks(
+    theme=gr.themes.Soft(
+        primary_hue="blue",
+        secondary_hue="indigo"
+    ),
+    css=css,
+    title="Customer Segmentation System"
+) as demo:
 
     gr.Markdown("""
-    # 🛡️ Customer Segmentation System
+<div class="main-header">
 
-    Predict the customer segment using the trained **K-Prototypes Model**.
+# 🛡️ AI Customer Segmentation System
 
-    ---
-    ### Developed by **Vansh Bareja**
-    **Roll No.: 241047**
-    """)
+### Intelligent Customer Cluster Prediction using K-Prototypes
 
-    gr.Markdown("## 📊 Numerical Features")
+Developed by **Vansh Bareja**
+
+Roll No. **241047**
+
+</div>
+""")
 
     with gr.Row():
 
