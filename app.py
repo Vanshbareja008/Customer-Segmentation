@@ -223,12 +223,14 @@ button.primary:hover{
 """
 
 with gr.Blocks(
- theme = gr.themes.Monochrome(
-    primary_hue="gray",
-    secondary_hue="gray",
-    neutral_hue="gray",
-),
-    with gr.Blocks(theme=theme, css=css) as demo:
+    theme=gr.themes.Monochrome(
+        primary_hue="gray",
+        secondary_hue="gray",
+        neutral_hue="gray",
+    ),
+    css=css,
+    title="Customer Segmentation System"
+) as demo:
 
     gr.Markdown("""
 <div class="main-header">
