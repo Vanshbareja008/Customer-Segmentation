@@ -273,15 +273,15 @@ button.primary:hover{
 
 with gr.Blocks(
     theme=gr.themes.Soft(
-    primary_hue="emerald",
-    secondary_hue="gray",
-    neutral_hue="gray",
+        primary_hue="emerald",
+        secondary_hue="gray",
+        neutral_hue="gray",
     ),
     css=css,
     title="Customer Segmentation System"
 ) as demo:
 
-   gr.Markdown("""
+    gr.Markdown("""
 <div class="main-header">
 
 <h1>🛡️ Customer Segmentation Analytics Dashboard</h1>
@@ -298,7 +298,6 @@ with gr.Blocks(
 
 </div>
 """)
-
     with gr.Row():
 
         age = gr.Number(
