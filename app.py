@@ -205,12 +205,52 @@ button.primary:hover{
     font-size:16px;
 }
 
-.developer-card h2{
+/* Developer Card */
+
+.developer-card{
+    margin-top:25px;
+    background:#3B3B3B;
+    border-radius:12px;
+    padding:18px;
+    width:330px;
+    margin:auto;
+    border:1px solid #5A5A5A;
+}
+
+/* Developed By */
+
+.dev-label{
+    display:block;
     color:#FFFFFF !important;
-    margin:8px 0;
-    font-size:28px;
+    font-size:18px;
     font-weight:700;
-    letter-spacing:.5px;
+    margin-bottom:8px;
+}
+
+/* Name */
+
+.dev-name{
+    color:#1B8A5A !important;
+    font-size:30px;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+/* Roll Label */
+
+.roll-label{
+    color:#FFFFFF !important;
+    font-size:18px;
+    font-weight:700;
+}
+
+/* Roll Number */
+
+.roll-number{
+    color:#FFD54F !important;
+    font-size:22px;
+    font-weight:700;
+    margin-left:8px;
 }
 
 /* Result */
@@ -241,7 +281,7 @@ with gr.Blocks(
     title="Customer Segmentation System"
 ) as demo:
 
-    gr.Markdown("""
+   gr.Markdown("""
 <div class="main-header">
 
 <h1>🛡️ Customer Segmentation Analytics Dashboard</h1>
@@ -249,9 +289,11 @@ with gr.Blocks(
 <h3>Intelligent Customer Cluster Prediction using K-Prototypes</h3>
 
 <div class="developer-card">
-    <p><strong>👨‍💻 Developed By</strong></p>
-    <h2>Vansh Bareja</h2>
-    <p>Roll No. <strong>241047</strong></p>
+    <span class="dev-label">Developed By</span>
+    <div class="dev-name">Vansh Bareja</div>
+
+    <span class="roll-label">Roll No.</span>
+    <span class="roll-number">241047</span>
 </div>
 
 </div>
