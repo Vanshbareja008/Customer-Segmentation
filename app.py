@@ -133,10 +133,10 @@ css = """
 """
 
 with gr.Blocks(
-   theme = gr.themes.Default(
-    primary_hue="blue",
-    secondary_hue="slate",
-    neutral_hue="gray"
+ theme = gr.themes.Monochrome(
+    primary_hue="slate",
+    secondary_hue="gray",
+    neutral_hue="gray",
 ),
     css=css,
     title="Customer Segmentation System"
