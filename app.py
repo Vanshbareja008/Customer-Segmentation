@@ -145,7 +145,7 @@ with gr.Blocks(
     gr.Markdown("""
 <div class="main-header">
 
-# 🛡️ AI Customer Segmentation System
+# 🛡️ Customer Segmentation Analytics Dashboard
 
 ### Intelligent Customer Cluster Prediction using K-Prototypes
 
