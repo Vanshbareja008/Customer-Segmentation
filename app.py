@@ -97,136 +97,117 @@ def predict_customer(
 # ==========================
 
 css = """
-/* =========================
-   Professional Business Theme
-========================= */
-
 body{
-    background:#F5F5F5;
+    background:#ECECEC;
 }
 
 .gradio-container{
-    background:#F5F5F5;
-    font-family:"Segoe UI",Arial,sans-serif;
-    color:#1F2937;
+    background:#ECECEC !important;
+    color:#222 !important;
+    font-family:Segoe UI,Arial,sans-serif;
 }
 
-/* =========================
-   Header
-========================= */
+/* Header */
 
 .main-header{
-    background:#2C2C2C;
-    color:white;
-    padding:28px;
-    border-radius:14px;
+    background:#2B2B2B;
+    padding:35px;
+    border-radius:16px;
     text-align:center;
-    margin-bottom:22px;
-    border-left:6px solid #16A34A;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    border-left:8px solid #1B8A5A;
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
+    margin-bottom:25px;
 }
 
 .main-header h1{
-    margin:0;
-    font-size:34px;
+    color:#FFFFFF !important;
+    font-size:38px;
     font-weight:700;
+    margin-bottom:12px;
+}
+
+.main-header h3{
+    color:#E8E8E8 !important;
+    font-weight:500;
 }
 
 .main-header p{
-    margin-top:10px;
-    color:#D1D5DB;
+    color:#D8D8D8 !important;
+    font-size:17px;
 }
 
-/* =========================
-   Cards
-========================= */
+/* Cards */
 
-.section{
-    background:white;
-    border-radius:12px;
-    padding:22px;
-    margin:18px 0;
-    border:1px solid #E5E7EB;
-    box-shadow:0 3px 10px rgba(0,0,0,.05);
+.block{
+    background:white !important;
+    border-radius:14px !important;
+    border:1px solid #DDDDDD !important;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
 }
 
-/* =========================
-   Inputs
-========================= */
+/* Labels */
 
-.gr-textbox textarea,
-.gr-number input,
-.gr-dropdown{
+label{
+    color:#333 !important;
+    font-weight:600 !important;
+}
+
+/* Inputs */
+
+textarea,
+input,
+select{
     border-radius:8px !important;
-    border:1px solid #D1D5DB !important;
+    border:1px solid #CFCFCF !important;
+    background:white !important;
+    color:#222 !important;
 }
 
-.gr-textbox textarea:focus,
-.gr-number input:focus{
-    border-color:#16A34A !important;
-    box-shadow:0 0 0 2px rgba(22,163,74,.15) !important;
+textarea:focus,
+input:focus,
+select:focus{
+    border:1px solid #1B8A5A !important;
+    box-shadow:0 0 0 3px rgba(27,138,90,.15) !important;
 }
 
-/* =========================
-   Button
-========================= */
+/* Button */
 
 button.primary{
-    background:#2C2C2C !important;
+    background:#2B2B2B !important;
     color:white !important;
     border:none !important;
     border-radius:10px !important;
-    font-size:16px;
     font-weight:600;
-    padding:12px 20px;
     transition:.25s;
 }
 
 button.primary:hover{
-    background:#16A34A !important;
+    background:#1B8A5A !important;
 }
 
-/* =========================
-   Result
-========================= */
+/* Result */
 
 .result-box textarea{
-    background:#F0FDF4 !important;
-    color:#166534 !important;
-    font-size:20px !important;
-    font-weight:700 !important;
-    border:1px solid #BBF7D0 !important;
+    background:#EDF9F2 !important;
+    color:#0B5A38 !important;
+    font-size:22px !important;
+    font-weight:bold !important;
+    border:2px solid #1B8A5A !important;
 }
 
-/* =========================
-   Footer
-========================= */
+/* Footer */
 
 .footer{
+    color:#666;
     text-align:center;
-    color:#6B7280;
-    margin-top:25px;
-}
-
-/* =========================
-   Scrollbar
-========================= */
-
-::-webkit-scrollbar{
-    width:8px;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#BDBDBD;
-    border-radius:20px;
 }
 """
 
 with gr.Blocks(
-    theme=gr.themes.Monochrome(
-        primary_hue="gray",
-        secondary_hue="gray",
-        neutral_hue="gray",
+    theme=gr.themes.Soft(
+    primary_hue="emerald",
+    secondary_hue="gray",
+    neutral_hue="gray",
     ),
     css=css,
     title="Customer Segmentation System"
