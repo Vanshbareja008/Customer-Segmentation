@@ -97,126 +97,128 @@ def predict_customer(
 # ==========================
 
 css = """
-/* ========= Global ========= */
+/* =========================
+   Professional Business Theme
+========================= */
 
 body{
-    background:#F3F6FA;
+    background:#F5F5F5;
 }
 
 .gradio-container{
-    background:#F3F6FA;
-    font-family: "Segoe UI", Arial, sans-serif;
+    background:#F5F5F5;
+    font-family:"Segoe UI",Arial,sans-serif;
+    color:#1F2937;
 }
 
-/* ========= Header ========= */
+/* =========================
+   Header
+========================= */
 
 .main-header{
-    background:#1E3A8A;
+    background:#2C2C2C;
     color:white;
     padding:28px;
     border-radius:14px;
     text-align:center;
-    margin-bottom:25px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom:22px;
+    border-left:6px solid #16A34A;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
 }
 
 .main-header h1{
-    margin-bottom:8px;
+    margin:0;
+    font-size:34px;
+    font-weight:700;
 }
 
 .main-header p{
-    color:#D6E4FF;
+    margin-top:10px;
+    color:#D1D5DB;
 }
 
-/* ========= Cards ========= */
+/* =========================
+   Cards
+========================= */
 
 .section{
     background:white;
     border-radius:12px;
     padding:22px;
-    margin-top:18px;
-    margin-bottom:18px;
+    margin:18px 0;
     border:1px solid #E5E7EB;
-    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+    box-shadow:0 3px 10px rgba(0,0,0,.05);
 }
 
-/* ========= Inputs ========= */
-
-.gr-textbox,
-.gr-dropdown,
-.gr-number{
-    border-radius:8px !important;
-}
+/* =========================
+   Inputs
+========================= */
 
 .gr-textbox textarea,
 .gr-number input,
 .gr-dropdown{
-    border:1px solid #CBD5E1 !important;
+    border-radius:8px !important;
+    border:1px solid #D1D5DB !important;
 }
 
 .gr-textbox textarea:focus,
 .gr-number input:focus{
-    border-color:#2563EB !important;
-    box-shadow:0 0 0 2px rgba(37,99,235,.15) !important;
+    border-color:#16A34A !important;
+    box-shadow:0 0 0 2px rgba(22,163,74,.15) !important;
 }
 
-/* ========= Buttons ========= */
+/* =========================
+   Button
+========================= */
 
 button.primary{
-    background:#2563EB !important;
-    border:none !important;
+    background:#2C2C2C !important;
     color:white !important;
-    font-weight:600;
+    border:none !important;
     border-radius:10px !important;
-    padding:12px 24px !important;
-    transition:.2s;
+    font-size:16px;
+    font-weight:600;
+    padding:12px 20px;
+    transition:.25s;
 }
 
 button.primary:hover{
-    background:#1D4ED8 !important;
+    background:#16A34A !important;
 }
 
-/* ========= Prediction Result ========= */
+/* =========================
+   Result
+========================= */
 
 .result-box textarea{
-    background:#ECFDF5 !important;
-    color:#065F46 !important;
+    background:#F0FDF4 !important;
+    color:#166534 !important;
     font-size:20px !important;
     font-weight:700 !important;
-    border:1px solid #A7F3D0 !important;
-    border-radius:10px !important;
+    border:1px solid #BBF7D0 !important;
 }
 
-/* ========= Example Table ========= */
-
-.gr-samples{
-    border-radius:10px;
-    overflow:hidden;
-    border:1px solid #E5E7EB;
-}
-
-/* ========= Footer ========= */
+/* =========================
+   Footer
+========================= */
 
 .footer{
     text-align:center;
     color:#6B7280;
-    font-size:14px;
-    padding:25px;
+    margin-top:25px;
 }
 
-/* ========= Scrollbar ========= */
+/* =========================
+   Scrollbar
+========================= */
 
 ::-webkit-scrollbar{
-    width:10px;
+    width:8px;
 }
 
 ::-webkit-scrollbar-thumb{
-    background:#CBD5E1;
+    background:#BDBDBD;
     border-radius:20px;
-}
-
-::-webkit-scrollbar-thumb:hover{
-    background:#94A3B8;
 }
 """
 
