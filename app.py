@@ -133,10 +133,12 @@ css = """
 """
 
 with gr.Blocks(
-    theme=gr.themes.Soft(
-        primary_hue="blue",
-        secondary_hue="indigo"
-    ),
+   theme = gr.themes.Glass(
+    primary_hue="blue",
+    secondary_hue="cyan",
+    neutral_hue="slate",
+    radius_size="lg"
+)
     css=css,
     title="Customer Segmentation System"
 ) as demo:
@@ -457,8 +459,8 @@ Roll No. **241047**
         - Click **Predict Customer Segment**.
         - The trained K-Prototypes model will predict the most suitable cluster.
 
-        **Developed by Sameer Chopra**  
-        **Roll No. 241020**
+        **Developed by Vansh Bareja**  
+        **Roll No. 241047**
         """
     )
 
