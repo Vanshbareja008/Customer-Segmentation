@@ -185,6 +185,34 @@ button.primary:hover{
     background:#1B8A5A !important;
 }
 
+/* Developer Card */
+
+.developer-card{
+    margin-top:25px;
+    background:#3A3A3A;
+    border:1px solid #555;
+    border-radius:12px;
+    padding:18px;
+    width:320px;
+    margin-left:auto;
+    margin-right:auto;
+    box-shadow:0 6px 15px rgba(0,0,0,.18);
+}
+
+.developer-card p{
+    color:#DADADA !important;
+    margin:5px 0;
+    font-size:16px;
+}
+
+.developer-card h2{
+    color:#FFFFFF !important;
+    margin:8px 0;
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:.5px;
+}
+
 /* Result */
 
 .result-box textarea{
@@ -216,13 +244,15 @@ with gr.Blocks(
     gr.Markdown("""
 <div class="main-header">
 
-# 🛡️ Customer Segmentation Analytics Dashboard
+<h1>🛡️ Customer Segmentation Analytics Dashboard</h1>
 
-### Intelligent Customer Cluster Prediction using K-Prototypes
+<h3>Intelligent Customer Cluster Prediction using K-Prototypes</h3>
 
-Developed by **Vansh Bareja**
-
-Roll No. **241047**
+<div class="developer-card">
+    <p><strong>👨‍💻 Developed By</strong></p>
+    <h2>Vansh Bareja</h2>
+    <p>Roll No. <strong>241047</strong></p>
+</div>
 
 </div>
 """)
