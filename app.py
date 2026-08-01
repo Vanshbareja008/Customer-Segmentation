@@ -97,38 +97,126 @@ def predict_customer(
 # ==========================
 
 css = """
-.gradio-container{
-    background: linear-gradient(135deg,#eef5ff,#f9fbff);
+/* ========= Global ========= */
+
+body{
+    background:#F3F6FA;
 }
 
-.main-header{
-    background: linear-gradient(90deg,#2563eb,#4f46e5);
-    padding:25px;
-    border-radius:18px;
-    color:white;
-    text-align:center;
-    box-shadow:0px 8px 20px rgba(0,0,0,0.15);
-    margin-bottom:20px;
+.gradio-container{
+    background:#F3F6FA;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
+
+/* ========= Header ========= */
+
+.main-header{
+    background:#1E3A8A;
+    color:white;
+    padding:28px;
+    border-radius:14px;
+    text-align:center;
+    margin-bottom:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.main-header h1{
+    margin-bottom:8px;
+}
+
+.main-header p{
+    color:#D6E4FF;
+}
+
+/* ========= Cards ========= */
 
 .section{
     background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.08);
-    margin-top:15px;
+    border-radius:12px;
+    padding:22px;
+    margin-top:18px;
+    margin-bottom:18px;
+    border:1px solid #E5E7EB;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
+
+/* ========= Inputs ========= */
+
+.gr-textbox,
+.gr-dropdown,
+.gr-number{
+    border-radius:8px !important;
+}
+
+.gr-textbox textarea,
+.gr-number input,
+.gr-dropdown{
+    border:1px solid #CBD5E1 !important;
+}
+
+.gr-textbox textarea:focus,
+.gr-number input:focus{
+    border-color:#2563EB !important;
+    box-shadow:0 0 0 2px rgba(37,99,235,.15) !important;
+}
+
+/* ========= Buttons ========= */
+
+button.primary{
+    background:#2563EB !important;
+    border:none !important;
+    color:white !important;
+    font-weight:600;
+    border-radius:10px !important;
+    padding:12px 24px !important;
+    transition:.2s;
+}
+
+button.primary:hover{
+    background:#1D4ED8 !important;
+}
+
+/* ========= Prediction Result ========= */
+
+.result-box textarea{
+    background:#ECFDF5 !important;
+    color:#065F46 !important;
+    font-size:20px !important;
+    font-weight:700 !important;
+    border:1px solid #A7F3D0 !important;
+    border-radius:10px !important;
+}
+
+/* ========= Example Table ========= */
+
+.gr-samples{
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid #E5E7EB;
+}
+
+/* ========= Footer ========= */
 
 .footer{
     text-align:center;
-    color:#666;
-    padding:20px;
+    color:#6B7280;
+    font-size:14px;
+    padding:25px;
 }
 
-.result-box textarea{
-    font-size:22px !important;
-    font-weight:bold;
-    color:#0f766e !important;
+/* ========= Scrollbar ========= */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#CBD5E1;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#94A3B8;
 }
 """
 
