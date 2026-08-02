@@ -135,7 +135,7 @@ def predict_customer(
             border-radius: 12px; 
             padding: 22px; 
             margin-top: 10px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
             font-family: 'Segoe UI', Tahoma, sans-serif;
         ">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
@@ -177,25 +177,37 @@ def predict_customer(
         return f"<div style='color:red; font-weight:bold; padding:10px;'>Error processing prediction: {e}</div>"
 
 
-# ==========================
-# Custom Dashboard CSS
-# ==========================
+# ==========================================
+# Custom Dashboard CSS (Option 4 Background)
+# ==========================================
 
 css = """
+/* Background image setup with dark overlay fallback */
 body, .gradio-container {
-    background-color: #2F363D !important;
+    background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed !important;
+    background-size: cover !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Dark semi-transparent overlay for maximum UI contrast */
+.gradio-container::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 23, 32, 0.78);
+    z-index: -1;
 }
 
 /* Main Dashboard Header */
 .main-header {
-    background: #1B2127;
+    background: rgba(27, 33, 39, 0.90);
     padding: 24px 20px;
     border-radius: 14px;
     text-align: center;
     border: 1.5px solid #10B981;
     margin-bottom: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
 .main-header h1 {
@@ -213,7 +225,7 @@ body, .gradio-container {
 
 /* Developer Info Card */
 .developer-card {
-    background: #252D35;
+    background: rgba(37, 45, 53, 0.95);
     border-radius: 10px;
     padding: 10px 20px;
     max-width: 320px;
@@ -245,7 +257,7 @@ body, .gradio-container {
     padding: 18px !important;
     border-radius: 12px !important;
     margin-bottom: 15px !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
 label span {
@@ -256,19 +268,20 @@ label span {
 
 /* Submit Button */
 button.primary-btn {
-    background: #374151 !important;
+    background: #10B981 !important;
     color: #FFFFFF !important;
     border-radius: 10px !important;
     font-size: 17px !important;
     font-weight: 600 !important;
     padding: 12px !important;
-    border: 1px solid #4B5563 !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
     transition: all 0.3s ease;
 }
 
 button.primary-btn:hover {
-    background: #10B981 !important;
-    border-color: #10B981 !important;
+    background: #059669 !important;
+    transform: translateY(-1px);
 }
 """
 
