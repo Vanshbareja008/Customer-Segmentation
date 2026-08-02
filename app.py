@@ -27,8 +27,9 @@ CLUSTER_PERSONAS = {
         "subtitle": "Tier 1 Premium Segment",
         "description": "High-income customers with premium coverage policies. Highly engaged with minimal churn risk.",
         "badge_color": "#10B981",
-        "bg_color": "rgba(16, 185, 129, 0.08)",
-        "border_color": "rgba(16, 185, 129, 0.4)",
+        "badge_text_color": "#022C22",
+        "bg_color": "rgba(16, 185, 129, 0.06)",
+        "border_color": "rgba(16, 185, 129, 0.35)",
         "recommendation": "Cross-sell premium wealth management products and offer exclusive VIP loyalty rewards.",
         "retention_score": "96%",
         "value_tier": "High ($$$)",
@@ -37,9 +38,10 @@ CLUSTER_PERSONAS = {
         "title": "🎓 Young Digital Budget Seekers",
         "subtitle": "Growth & Mobile-First Segment",
         "description": "Younger demographic looking for cost-effective basic coverage with digital-first interaction preferences.",
-        "badge_color": "#0284C7",
-        "bg_color": "rgba(2, 132, 199, 0.08)",
-        "border_color": "rgba(2, 132, 199, 0.4)",
+        "badge_color": "#38BDF8",
+        "badge_text_color": "#0C4A6E",
+        "bg_color": "rgba(56, 189, 248, 0.06)",
+        "border_color": "rgba(56, 189, 248, 0.35)",
         "recommendation": "Offer flexible pay-as-you-go insurance options via mobile app and SMS notifications.",
         "retention_score": "74%",
         "value_tier": "Moderate ($)",
@@ -48,9 +50,10 @@ CLUSTER_PERSONAS = {
         "title": "🛡️ Family Protection Focused",
         "subtitle": "Core Life & Health Segment",
         "description": "Mid-age married individuals prioritizing comprehensive health, vehicle, and life coverage for dependents.",
-        "badge_color": "#8B5CF6",
-        "bg_color": "rgba(139, 92, 246, 0.08)",
-        "border_color": "rgba(139, 92, 246, 0.4)",
+        "badge_color": "#A78BFA",
+        "badge_text_color": "#2E1065",
+        "bg_color": "rgba(167, 139, 250, 0.06)",
+        "border_color": "rgba(167, 139, 250, 0.35)",
         "recommendation": "Promote bundled family coverage packages and long-term savings plans.",
         "retention_score": "88%",
         "value_tier": "Medium-High ($$)",
@@ -59,9 +62,10 @@ CLUSTER_PERSONAS = {
         "title": "⚠️ High-Service Demand Segment",
         "subtitle": "Attention Required / Retention Risk",
         "description": "Frequent customer service interactions with moderate policy spend and higher retention sensitivity.",
-        "badge_color": "#EF4444",
-        "bg_color": "rgba(239, 68, 68, 0.08)",
-        "border_color": "rgba(239, 68, 68, 0.4)",
+        "badge_color": "#F87171",
+        "badge_text_color": "#450A0A",
+        "bg_color": "rgba(248, 113, 113, 0.06)",
+        "border_color": "rgba(248, 113, 113, 0.35)",
         "recommendation": "Assign dedicated customer support reps to resolve inquiries quickly and offer targeted renewal discounts.",
         "retention_score": "52%",
         "value_tier": "Sensitive ($$)",
@@ -89,16 +93,16 @@ def update_live_metrics(income, coverage, premium, interaction):
 
     summary_html = f"""
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 5px;">
-        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); padding: 12px 10px; border-radius: 12px; text-align: center;">
-            <div style="color: #94A3B8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Premium / Coverage Ratio</div>
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.06); padding: 12px 10px; border-radius: 12px; text-align: center;">
+            <div style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Premium / Coverage Ratio</div>
             <div style="color: #38BDF8; font-size: 20px; font-weight: 700; margin-top: 4px;">{loss_ratio}%</div>
         </div>
-        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); padding: 12px 10px; border-radius: 12px; text-align: center;">
-            <div style="color: #94A3B8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Service Touch level</div>
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.06); padding: 12px 10px; border-radius: 12px; text-align: center;">
+            <div style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Service Touch level</div>
             <div style="color: #FBBF24; font-size: 18px; font-weight: 700; margin-top: 5px;">{interaction}</div>
         </div>
-        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); padding: 12px 10px; border-radius: 12px; text-align: center;">
-            <div style="color: #94A3B8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Retention Radar</div>
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.06); padding: 12px 10px; border-radius: 12px; text-align: center;">
+            <div style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Retention Radar</div>
             <div style="color: {risk_color}; font-size: 15px; font-weight: 700; margin-top: 6px;">{risk_label}</div>
         </div>
     </div>
@@ -177,22 +181,23 @@ def predict_customer(
                 "subtitle": "Standard Classification",
                 "description": "Standard profile matching default cluster characteristics.",
                 "badge_color": "#3B82F6",
-                "bg_color": "rgba(59, 130, 246, 0.08)",
-                "border_color": "rgba(59, 130, 246, 0.4)",
+                "badge_text_color": "#1E3A8A",
+                "bg_color": "rgba(59, 130, 246, 0.06)",
+                "border_color": "rgba(59, 130, 246, 0.35)",
                 "recommendation": "Apply standard customer engagement and marketing strategy.",
                 "retention_score": "80%",
                 "value_tier": "Standard",
             },
         )
 
-        # Dashboard Persona Card Output HTML
+        # Dashboard Persona Card Output HTML (Dark-Theme Harmonized)
         html_output = f"""
         <div style="
             background: {persona['bg_color']}; 
             border: 1.5px solid {persona['border_color']}; 
             border-radius: 16px; 
-            padding: 24px; 
-            margin-top: 10px;
+            padding: 22px; 
+            margin-top: 8px;
             box-shadow: 0 12px 30px rgba(0,0,0,0.4);
             backdrop-filter: blur(12px);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -201,54 +206,53 @@ def predict_customer(
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
                 <span style="
                     background-color: {persona['badge_color']}; 
-                    color: #FFFFFF; 
+                    color: {persona['badge_text_color']}; 
                     font-size: 12px; 
                     font-weight: 800; 
                     letter-spacing: 0.6px;
-                    padding: 6px 14px; 
+                    padding: 5px 14px; 
                     border-radius: 20px;
                     text-transform: uppercase;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
                 ">
                     Cluster {cluster_id + 1} Assigned
                 </span>
-                <span style="color: #94A3B8; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                <span style="color: #64748B; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
                     <span style="height: 8px; width: 8px; background-color: #10B981; border-radius: 50%; display: inline-block;"></span>
                     Scoring Engine Active
                 </span>
             </div>
 
             <!-- Header Info -->
-            <h2 style="color: #FFFFFF; font-size: 26px; font-weight: 700; margin: 0 0 4px 0; letter-spacing: -0.5px;">
+            <h2 style="color: #E2E8F0; font-size: 24px; font-weight: 700; margin: 0 0 4px 0; letter-spacing: -0.5px;">
                 {persona['title']}
             </h2>
-            <div style="color: {persona['badge_color']}; font-size: 14px; font-weight: 600; margin-bottom: 14px;">
+            <div style="color: {persona['badge_color']}; font-size: 13px; font-weight: 600; margin-bottom: 14px;">
                 {persona['subtitle']}
             </div>
             
-            <p style="color: #CBD5E1; font-size: 14px; margin: 0 0 20px 0; line-height: 1.6;">
+            <p style="color: #94A3B8; font-size: 14px; margin: 0 0 20px 0; line-height: 1.6;">
                 {persona['description']}
             </p>
 
             <!-- Key Persona Metrics Grid -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
-                <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 12px;">
-                    <span style="color: #94A3B8; font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Predicted Retention Rate</span>
-                    <span style="color: #FFFFFF; font-size: 20px; font-weight: 700;">{persona['retention_score']}</span>
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 12px;">
+                    <span style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Predicted Retention Rate</span>
+                    <span style="color: #38BDF8; font-size: 20px; font-weight: 700;">{persona['retention_score']}</span>
                 </div>
-                <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 12px;">
-                    <span style="color: #94A3B8; font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Segment Profitability Tier</span>
-                    <span style="color: #FFFFFF; font-size: 20px; font-weight: 700;">{persona['value_tier']}</span>
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 12px;">
+                    <span style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Segment Profitability Tier</span>
+                    <span style="color: #34D399; font-size: 20px; font-weight: 700;">{persona['value_tier']}</span>
                 </div>
             </div>
 
-            <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 18px 0;">
+            <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 18px 0;">
 
             <!-- Strategy Recommendation -->
             <div style="display: flex; gap: 14px; align-items: flex-start; background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 12px; border-left: 4px solid {persona['badge_color']};">
-                <span style="font-size: 22px; line-height: 1;">💡</span>
+                <span style="font-size: 20px; line-height: 1;">💡</span>
                 <div>
-                    <strong style="color: #FFFFFF; font-size: 14px; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Recommended Action Plan:</strong>
+                    <strong style="color: #CBD5E1; font-size: 13px; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Recommended Action Plan:</strong>
                     <p style="color: #94A3B8; font-size: 14px; margin: 0; line-height: 1.5;">{persona['recommendation']}</p>
                 </div>
             </div>
@@ -265,33 +269,33 @@ def predict_customer(
 
 
 # ==========================================
-# Custom High-End Styling CSS
+# Custom Full Dark Theme CSS (Zero White Elements)
 # ==========================================
 
 css = """
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Global Reset & Dark Mode Theme */
-body, .gradio-container {
-    background-color: #090D16 !important;
+/* Global Reset & Dark Theme Base */
+body, .gradio-container, .main {
+    background-color: #070A10 !important;
     font-family: 'Inter', -apple-system, sans-serif !important;
-    color: #F3F4F6 !important;
+    color: #CBD5E1 !important;
 }
 
-/* Glassmorphism Header */
+/* Glassmorphism Header Bar */
 .main-header {
-    background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.6) 100%);
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.5) 100%);
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     padding: 24px;
     border-radius: 16px;
     text-align: center;
     margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .main-header h1 {
-    color: #FFFFFF !important;
+    color: #E2E8F0 !important;
     font-size: 28px;
     font-weight: 700;
     letter-spacing: -0.5px;
@@ -299,15 +303,15 @@ body, .gradio-container {
 }
 
 .main-header p {
-    color: #94A3B8 !important;
+    color: #64748B !important;
     font-size: 14px;
     margin: 0 0 16px 0;
 }
 
 /* Developer Pill Badge */
 .developer-card {
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.25);
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
     border-radius: 30px;
     padding: 6px 18px;
     display: inline-flex;
@@ -316,7 +320,7 @@ body, .gradio-container {
 }
 
 .dev-info {
-    color: #CBD5E1;
+    color: #94A3B8;
     font-size: 13px;
     font-weight: 500;
 }
@@ -328,16 +332,16 @@ body, .gradio-container {
 
 /* Form Container Style */
 .form-card {
-    background: rgba(15, 23, 42, 0.5) !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    background: rgba(15, 23, 42, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
     border-radius: 14px !important;
     padding: 18px !important;
     margin-bottom: 16px !important;
 }
 
 .card-title {
-    color: #10B981;
-    font-size: 13px;
+    color: #34D399;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -347,42 +351,64 @@ body, .gradio-container {
     gap: 6px;
 }
 
-/* Custom Input Field Integration */
-.gr-box, .gr-input, label {
+/* Complete Dark Control Component Overrides */
+.gr-box, .gr-input, label, fieldset {
     background-color: transparent !important;
     border: none !important;
 }
 
-input, select, textarea {
+input, select, textarea, .gr-dropdown {
     background-color: #0F172A !important;
-    border: 1px solid #334155 !important;
-    color: #F8FAFC !important;
+    border: 1px solid #1E293B !important;
+    color: #CBD5E1 !important;
     border-radius: 8px !important;
+}
+
+/* Dropdown Menu Item Styling */
+ul.options, .gr-dropdown-options {
+    background-color: #0F172A !important;
+    border: 1px solid #1E293B !important;
+    color: #CBD5E1 !important;
+}
+
+li.item, .gr-dropdown-option {
+    background-color: #0F172A !important;
+    color: #CBD5E1 !important;
+}
+
+li.item:hover, .gr-dropdown-option:hover {
+    background-color: #1E293B !important;
+    color: #34D399 !important;
 }
 
 input:focus, select:focus {
     border-color: #10B981 !important;
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.15) !important;
 }
 
 label span {
-    color: #94A3B8 !important;
+    color: #64748B !important;
     font-weight: 600 !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
+}
+
+/* Dark Theme Range Slider */
+input[type="range"] {
+    accent-color: #10B981 !important;
 }
 
 /* Action Predict Button */
 button.primary-btn {
     background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
-    color: #FFFFFF !important;
+    color: #022C22 !important;
     border-radius: 10px !important;
     font-size: 15px !important;
     font-weight: 700 !important;
     padding: 14px !important;
     border: none !important;
-    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3) !important;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25) !important;
     transition: all 0.2s ease !important;
     cursor: pointer !important;
     width: 100% !important;
@@ -390,7 +416,7 @@ button.primary-btn {
 
 button.primary-btn:hover {
     transform: translateY(-1px) !important;
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4) !important;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35) !important;
 }
 """
 
@@ -537,9 +563,7 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
 
             # Real-Time Telemetry Bar
             with gr.Group(elem_classes=["form-card"]):
-                gr.HTML(
-                    '<div class="card-title">📊 Live Telemetry Bar</div>'
-                )
+                gr.HTML('<div class="card-title">📊 Live Telemetry Bar</div>')
                 live_kpi_display = gr.HTML()
 
             # Execute Primary Prediction Button
@@ -547,7 +571,7 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                 "⚡ Score Customer Segment", elem_classes=["primary-btn"]
             )
 
-            # High-Impact Persona Display Output
+            # Persona Display Output
             with gr.Group(elem_classes=["form-card"]):
                 gr.HTML(
                     '<div class="card-title">🎯 Cluster Persona Insights</div>'
