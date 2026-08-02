@@ -1,7 +1,7 @@
 import gradio as gr
 import joblib
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 # ==========================
 # Load Model Package
@@ -19,6 +19,7 @@ categorical_indices = package["categorical_indices"]
 # ==========================
 # Prediction Function
 # ==========================
+
 
 def predict_customer(
     age,
@@ -38,208 +39,136 @@ def predict_customer(
     customer_preference,
     communication_channel,
     contact_time,
-    language
+    language,
 ):
-
     try:
-
         # Numerical Features
-        numeric_df = pd.DataFrame({
-            "Age":[age],
-            "Income Level":[income],
-            "Coverage Amount":[coverage],
-            "Premium Amount":[premium],
-            "Purchase Year":[purchase_year]
-        })
+        numeric_df = pd.DataFrame(
+            {
+                "Age": [age],
+                "Income Level": [income],
+                "Coverage Amount": [coverage],
+                "Premium Amount": [premium],
+                "Purchase Year": [purchase_year],
+            }
+        )
 
         # Scale Numerical Features
         scaled_numeric = scaler.transform(numeric_df)
 
         # Categorical Features
-        categorical_df = pd.DataFrame({
-            "Gender":[gender],
-            "Marital Status":[marital_status],
-            "Education Level":[education],
-            "Geographic Information":[geographic],
-            "Occupation":[occupation],
-            "Behavioral Data":[behavioral],
-            "Interactions with Customer Service":[interaction],
-            "Insurance Products Owned":[insurance_products],
-            "Policy Type":[policy_type],
-            "Customer Preferences":[customer_preference],
-            "Preferred Communication Channel":[communication_channel],
-            "Preferred Contact Time":[contact_time],
-            "Preferred Language":[language]
-        })
+        categorical_df = pd.DataFrame(
+            {
+                "Gender": [gender],
+                "Marital Status": [marital_status],
+                "Education Level": [education],
+                "Geographic Information": [geographic],
+                "Occupation": [occupation],
+                "Behavioral Data": [behavioral],
+                "Interactions with Customer Service": [interaction],
+                "Insurance Products Owned": [insurance_products],
+                "Policy Type": [policy_type],
+                "Customer Preferences": [customer_preference],
+                "Preferred Communication Channel": [communication_channel],
+                "Preferred Contact Time": [contact_time],
+                "Preferred Language": [language],
+            }
+        )
 
         # Merge Numeric + Categorical
         X = np.concatenate(
-            [
-                scaled_numeric,
-                categorical_df.values
-            ],
-            axis=1
+            [scaled_numeric, categorical_df.values], axis=1
         )
 
         # Predict Cluster
-        cluster = model.predict(
-            X,
-            categorical=categorical_indices
-        )[0]
+        cluster = model.predict(X, categorical=categorical_indices)[0]
 
         return f"🎯 Predicted Customer Segment : Cluster {cluster + 1}"
 
     except Exception as e:
         return f"Error : {e}"
 
+
 # ==========================
-# Gradio Interface
+# Gradio Custom Styling
 # ==========================
 
 css = """
-body{
-    background:#ECECEC;
+body {
+    background-color: #ECECEC;
 }
 
-.gradio-container{
-    background:#ECECEC !important;
-    color:#222 !important;
-    font-family:Segoe UI,Arial,sans-serif;
+.gradio-container {
+    background-color: #ECECEC !important;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-/* Header */
-
-.main-header{
-    background:#2B2B2B;
-    padding:35px;
-    border-radius:16px;
-    text-align:center;
-    border-left:8px solid #1B8A5A;
-    box-shadow:0 8px 18px rgba(0,0,0,.12);
-    margin-bottom:25px;
+/* Main Header Card */
+.main-header {
+    background-color: #2B2B2B;
+    padding: 30px 20px;
+    border-radius: 16px;
+    text-align: center;
+    border-left: 8px solid #1B8A5A;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    margin-bottom: 20px;
 }
 
-.main-header h1{
-    color:#FFFFFF !important;
-    font-size:38px;
-    font-weight:700;
-    margin-bottom:12px;
+.main-header h1 {
+    color: #FFFFFF !important;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
 }
 
-.main-header h3{
-    color:#E8E8E8 !important;
-    font-weight:500;
+.main-header h3 {
+    color: #E8E8E8 !important;
+    font-weight: 400;
+    margin-bottom: 20px;
 }
 
-.main-header p{
-    color:#D8D8D8 !important;
-    font-size:17px;
+/* Inner Developer Card */
+.developer-card {
+    background: #3B3B3B;
+    border-radius: 12px;
+    padding: 16px;
+    max-width: 320px;
+    margin: 0 auto;
+    border: 1px solid #5A5A5A;
+    text-align: center;
 }
 
-/* Cards */
-
-.block{
-    background:white !important;
-    border-radius:14px !important;
-    border:1px solid #DDDDDD !important;
-    box-shadow:0 4px 14px rgba(0,0,0,.08);
+.dev-label {
+    color: #FFFFFF !important;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 
-/* Labels */
-
-label{
-    color:#333 !important;
-    font-weight:600 !important;
+.dev-name {
+    color: #1B8A5A !important;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 12px;
 }
 
-/* Inputs */
-
-textarea,
-input,
-select{
-    border-radius:8px !important;
-    border:1px solid #CFCFCF !important;
-    background:white !important;
-    color:#222 !important;
+.roll-label {
+    color: #FFFFFF !important;
+    font-size: 16px;
+    font-weight: 600;
 }
 
-textarea:focus,
-input:focus,
-select:focus{
-    border:1px solid #1B8A5A !important;
-    box-shadow:0 0 0 3px rgba(27,138,90,.15) !important;
-}
-
-/* Button */
-
-button.primary{
-    background:#2B2B2B !important;
-    color:white !important;
-    border:none !important;
-    border-radius:10px !important;
-    font-weight:600;
-    transition:.25s;
-}
-
-button.primary:hover{
-    background:#1B8A5A !important;
-}
-
-.developer-card{
-    margin-top:25px;
-    background:#3B3B3B;
-    border-radius:12px;
-    padding:20px;
-    width:340px;
-    margin:auto;
-    border:1px solid #5A5A5A;
-    text-align:center;
-}
-
-.dev-label{
-    color:#FFFFFF !important;
-    font-size:18px;
-    font-weight:700;
-    margin-bottom:8px;
-}
-
-.dev-name{
-    color:#1B8A5A !important;
-    font-size:30px;
-    font-weight:700;
-    margin-bottom:18px;
-}
-
-.roll-label{
-    color:#FFFFFF !important;
-    font-size:18px;
-    font-weight:700;
-}
-
-.roll-number{
-    color:#FFD700 !important;
-    font-size:28px;
-    font-weight:700;
-    margin-top:5px;
-}
-
-/* Result */
-
-.result-box textarea{
-    background:#EDF9F2 !important;
-    color:#0B5A38 !important;
-    font-size:22px !important;
-    font-weight:bold !important;
-    border:2px solid #1B8A5A !important;
-}
-
-/* Footer */
-
-.footer{
-    color:#666;
-    text-align:center;
+.roll-number {
+    color: #FFD700 !important;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 2px;
 }
 """
+
+# ==========================
+# Gradio Interface
+# ==========================
 
 with gr.Blocks(
     theme=gr.themes.Soft(
@@ -248,104 +177,53 @@ with gr.Blocks(
         neutral_hue="gray",
     ),
     css=css,
-    title="Customer Segmentation System"
+    title="Customer Segmentation System",
 ) as demo:
 
-    gr.Markdown("""
-<div class="main-header">
-
-<h1>🛡️ Customer Segmentation Analytics Dashboard</h1>
-
-<h3>Intelligent Customer Cluster Prediction using K-Prototypes</h3>
-
-<div class="developer-card">
-
-    <div class="dev-label">
-        👨‍💻 Developed By
+    # Clean HTML Render Header (Using gr.HTML instead of gr.Markdown)
+    gr.HTML("""
+    <div class="main-header">
+        <h1>🛡️ Customer Segmentation Analytics Dashboard</h1>
+        <h3>Intelligent Customer Cluster Prediction using K-Prototypes</h3>
+        <div class="developer-card">
+            <div class="dev-label">👨‍💻 Developed By</div>
+            <div class="dev-name">Vansh Bareja</div>
+            <div class="roll-label">Roll No.</div>
+            <div class="roll-number">241047</div>
+        </div>
     </div>
-
-    <div class="dev-name">
-        Vansh Bareja
-    </div>
-
-    <div class="roll-label">
-        Roll No.
-    </div>
-
-    <div class="roll-number">
-        241047
-    </div>
-
-</div>
-
-</div>
-""")
-    with gr.Row():
-
-        age = gr.Number(
-            label="Age",
-            value=35
-        )
-
-        income = gr.Number(
-            label="Income Level",
-            value=60000
-        )
+    """)
 
     with gr.Row():
+        age = gr.Number(label="Age", value=35)
+        income = gr.Number(label="Income Level", value=60000)
 
-        coverage = gr.Number(
-            label="Coverage Amount",
-            value=250000
-        )
+    with gr.Row():
+        coverage = gr.Number(label="Coverage Amount", value=250000)
+        premium = gr.Number(label="Premium Amount", value=15000)
 
-        premium = gr.Number(
-            label="Premium Amount",
-            value=15000
-        )
-
-    purchase_year = gr.Number(
-        label="Purchase Year",
-        value=2024
-    )
+    purchase_year = gr.Number(label="Purchase Year", value=2024)
 
     gr.Markdown("## 📝 Customer Information")
 
     with gr.Row():
-
-        gender = gr.Dropdown(
-            ["Male", "Female"],
-            value="Male",
-            label="Gender"
-        )
-
+        gender = gr.Dropdown(["Male", "Female"], value="Male", label="Gender")
         marital_status = gr.Dropdown(
             ["Single", "Married", "Divorced", "Widowed"],
             value="Single",
-            label="Marital Status"
+            label="Marital Status",
         )
 
     with gr.Row():
-
         education = gr.Dropdown(
-            [
-                "High School",
-                "Bachelor",
-                "Master",
-                "PhD"
-            ],
+            ["High School", "Bachelor", "Master", "PhD"],
             value="Bachelor",
-            label="Education Level"
+            label="Education Level",
         )
-
         geographic = gr.Dropdown(
-            [
-                "Urban",
-                "Suburban",
-                "Rural"
-            ],
+            ["Urban", "Suburban", "Rural"],
             value="Urban",
-            label="Geographic Information"
+            label="Geographic Information",
         )
 
     occupation = gr.Dropdown(
@@ -355,110 +233,65 @@ with gr.Blocks(
             "Self-Employed",
             "Student",
             "Retired",
-            "Unemployed"
+            "Unemployed",
         ],
         value="Employed",
-        label="Occupation"
+        label="Occupation",
     )
 
     behavioral = gr.Dropdown(
-        [
-            "Low",
-            "Medium",
-            "High"
-        ],
-        value="Medium",
-        label="Behavioral Data"
+        ["Low", "Medium", "High"], value="Medium", label="Behavioral Data"
     )
 
     interaction = gr.Dropdown(
-        [
-            "Low",
-            "Medium",
-            "High"
-        ],
+        ["Low", "Medium", "High"],
         value="Medium",
-        label="Interactions with Customer Service"
+        label="Interactions with Customer Service",
     )
 
     insurance_products = gr.Dropdown(
-        [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-        ],
+        ["1", "2", "3", "4", "5"],
         value="2",
-        label="Insurance Products Owned"
+        label="Insurance Products Owned",
     )
 
     policy_type = gr.Dropdown(
-        [
-            "Health",
-            "Life",
-            "Vehicle",
-            "Home",
-            "Travel"
-        ],
+        ["Health", "Life", "Vehicle", "Home", "Travel"],
         value="Health",
-        label="Policy Type"
+        label="Policy Type",
     )
 
     customer_preference = gr.Dropdown(
-        [
-            "Price",
-            "Coverage",
-            "Service",
-            "Benefits"
-        ],
+        ["Price", "Coverage", "Service", "Benefits"],
         value="Coverage",
-        label="Customer Preferences"
+        label="Customer Preferences",
     )
 
     communication_channel = gr.Dropdown(
-        [
-            "Email",
-            "Phone",
-            "SMS",
-            "Mobile App"
-        ],
+        ["Email", "Phone", "SMS", "Mobile App"],
         value="Email",
-        label="Preferred Communication Channel"
+        label="Preferred Communication Channel",
     )
 
     contact_time = gr.Dropdown(
-        [
-            "Morning",
-            "Afternoon",
-            "Evening"
-        ],
+        ["Morning", "Afternoon", "Evening"],
         value="Morning",
-        label="Preferred Contact Time"
+        label="Preferred Contact Time",
     )
 
     language = gr.Dropdown(
-        [
-            "English",
-            "Hindi",
-            "Spanish",
-            "French"
-        ],
+        ["English", "Hindi", "Spanish", "French"],
         value="English",
-        label="Preferred Language"
+        label="Preferred Language",
     )
 
-    predict_btn = gr.Button(
-        "Predict Customer Segment",
-        variant="primary"
-    )
+    predict_btn = gr.Button("Predict Customer Segment", variant="primary")
 
-    output = gr.Textbox(
-        label="Prediction Result"
-    )
-# ==========================
-# Button Action
-# ==========================
+    output = gr.Textbox(label="Prediction Result")
+
+    # ==========================
+    # Button Action
+    # ==========================
 
     predict_btn.click(
         fn=predict_customer,
@@ -480,9 +313,9 @@ with gr.Blocks(
             customer_preference,
             communication_channel,
             contact_time,
-            language
+            language,
         ],
-        outputs=output
+        outputs=output,
     )
 
     # ==========================
@@ -509,7 +342,7 @@ with gr.Blocks(
                 "Coverage",
                 "Email",
                 "Morning",
-                "English"
+                "English",
             ],
             [
                 48,
@@ -529,7 +362,7 @@ with gr.Blocks(
                 "Benefits",
                 "Phone",
                 "Evening",
-                "Hindi"
+                "Hindi",
             ],
             [
                 27,
@@ -549,8 +382,8 @@ with gr.Blocks(
                 "Price",
                 "SMS",
                 "Afternoon",
-                "English"
-            ]
+                "English",
+            ],
         ],
         inputs=[
             age,
@@ -570,8 +403,8 @@ with gr.Blocks(
             customer_preference,
             communication_channel,
             contact_time,
-            language
-        ]
+            language,
+        ],
     )
 
     gr.Markdown(
@@ -581,7 +414,7 @@ with gr.Blocks(
         - Enter customer information.
         - Click **Predict Customer Segment**.
         - The trained K-Prototypes model will predict the most suitable cluster.
-
+        
         **Developed by Vansh Bareja**  
         **Roll No. 241047**
         """
@@ -592,7 +425,4 @@ with gr.Blocks(
 # Launch App
 # ==========================
 
-demo.launch(
-    server_name="0.0.0.0",
-    server_port=7860
-)
+demo.launch(server_name="0.0.0.0", server_port=7860)
