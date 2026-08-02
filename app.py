@@ -74,30 +74,32 @@ CLUSTER_PERSONAS = {
 
 
 def update_live_metrics(income, coverage, premium, interaction):
-    """Calculates rapid live indicators for the user prior to model inference."""
     loss_ratio = (
         round((premium / coverage) * 100, 2) if coverage and coverage > 0 else 0
     )
 
     risk_label = "🟢 Low Risk"
+    risk_color = "#34D399"
     if interaction == "High" or loss_ratio > 8:
         risk_label = "🔴 High Attention"
+        risk_color = "#FCA5A5"
     elif interaction == "Medium" or loss_ratio > 4:
         risk_label = "🟡 Moderate Attention"
+        risk_color = "#FCD34D"
 
     summary_html = f"""
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 10px;">
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; text-align: center;">
-            <div style="color: #9CA3AF; font-size: 11px; font-weight: 600; text-transform: uppercase;">Est. Premium Ratio</div>
-            <div style="color: #38BDF8; font-size: 18px; font-weight: 700; margin-top: 4px;">{loss_ratio}%</div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 5px;">
+        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); padding: 12px 10px; border-radius: 12px; text-align: center;">
+            <div style="color: #94A3B8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Premium / Coverage Ratio</div>
+            <div style="color: #38BDF8; font-size: 20px; font-weight: 700; margin-top: 4px;">{loss_ratio}%</div>
         </div>
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; text-align: center;">
-            <div style="color: #9CA3AF; font-size: 11px; font-weight: 600; text-transform: uppercase;">Service Profile</div>
-            <div style="color: #FBBF24; font-size: 16px; font-weight: 700; margin-top: 4px;">{interaction} Touch</div>
+        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); padding: 12px 10px; border-radius: 12px; text-align: center;">
+            <div style="color: #94A3B8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Service Touch level</div>
+            <div style="color: #FBBF24; font-size: 18px; font-weight: 700; margin-top: 5px;">{interaction}</div>
         </div>
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; text-align: center;">
-            <div style="color: #9CA3AF; font-size: 11px; font-weight: 600; text-transform: uppercase;">Retention Status</div>
-            <div style="color: #34D399; font-size: 15px; font-weight: 700; margin-top: 5px;">{risk_label}</div>
+        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); padding: 12px 10px; border-radius: 12px; text-align: center;">
+            <div style="color: #94A3B8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Retention Radar</div>
+            <div style="color: {risk_color}; font-size: 15px; font-weight: 700; margin-top: 6px;">{risk_label}</div>
         </div>
     </div>
     """
@@ -183,15 +185,15 @@ def predict_customer(
             },
         )
 
-        # High-End Modern Dashboard Output HTML
+        # Dashboard Persona Card Output HTML
         html_output = f"""
         <div style="
             background: {persona['bg_color']}; 
-            border: 1px solid {persona['border_color']}; 
+            border: 1.5px solid {persona['border_color']}; 
             border-radius: 16px; 
             padding: 24px; 
             margin-top: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
             backdrop-filter: blur(12px);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         ">
@@ -202,17 +204,17 @@ def predict_customer(
                     color: #FFFFFF; 
                     font-size: 12px; 
                     font-weight: 800; 
-                    letter-spacing: 0.5px;
-                    padding: 6px 16px; 
+                    letter-spacing: 0.6px;
+                    padding: 6px 14px; 
                     border-radius: 20px;
                     text-transform: uppercase;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
                 ">
-                    Cluster {cluster_id + 1} Profile
+                    Cluster {cluster_id + 1} Assigned
                 </span>
-                <span style="color: #9CA3AF; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 6px;">
+                <span style="color: #94A3B8; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
                     <span style="height: 8px; width: 8px; background-color: #10B981; border-radius: 50%; display: inline-block;"></span>
-                    Inference Complete
+                    Scoring Engine Active
                 </span>
             </div>
 
@@ -224,30 +226,30 @@ def predict_customer(
                 {persona['subtitle']}
             </div>
             
-            <p style="color: #D1D5DB; font-size: 15px; margin: 0 0 20px 0; line-height: 1.6;">
+            <p style="color: #CBD5E1; font-size: 14px; margin: 0 0 20px 0; line-height: 1.6;">
                 {persona['description']}
             </p>
 
-            <!-- Key Persona Indicators Grid -->
+            <!-- Key Persona Metrics Grid -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
-                <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); padding: 12px; border-radius: 10px;">
-                    <span style="color: #9CA3AF; font-size: 12px; display: block;">Predicted Retention Stability</span>
-                    <span style="color: #FFFFFF; font-size: 18px; font-weight: 700;">{persona['retention_score']}</span>
+                <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 12px;">
+                    <span style="color: #94A3B8; font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Predicted Retention Rate</span>
+                    <span style="color: #FFFFFF; font-size: 20px; font-weight: 700;">{persona['retention_score']}</span>
                 </div>
-                <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); padding: 12px; border-radius: 10px;">
-                    <span style="color: #9CA3AF; font-size: 12px; display: block;">Segment Value Tier</span>
-                    <span style="color: #FFFFFF; font-size: 18px; font-weight: 700;">{persona['value_tier']}</span>
+                <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 12px;">
+                    <span style="color: #94A3B8; font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Segment Profitability Tier</span>
+                    <span style="color: #FFFFFF; font-size: 20px; font-weight: 700;">{persona['value_tier']}</span>
                 </div>
             </div>
 
             <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 18px 0;">
 
             <!-- Strategy Recommendation -->
-            <div style="display: flex; gap: 12px; align-items: flex-start; background: rgba(0,0,0,0.2); padding: 16px; border-radius: 12px; border-left: 4px solid {persona['badge_color']};">
-                <span style="font-size: 22px; line-height: 1;">🚀</span>
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 12px; border-left: 4px solid {persona['badge_color']};">
+                <span style="font-size: 22px; line-height: 1;">💡</span>
                 <div>
-                    <strong style="color: #FFFFFF; font-size: 15px; display: block; margin-bottom: 4px;">Recommended Business Action:</strong>
-                    <p style="color: #9CA3AF; font-size: 14px; margin: 0; line-height: 1.5;">{persona['recommendation']}</p>
+                    <strong style="color: #FFFFFF; font-size: 14px; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Recommended Action Plan:</strong>
+                    <p style="color: #94A3B8; font-size: 14px; margin: 0; line-height: 1.5;">{persona['recommendation']}</p>
                 </div>
             </div>
         </div>
@@ -256,85 +258,65 @@ def predict_customer(
 
     except Exception as e:
         return f"""
-        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #EF4444; color: #FCA5A5; padding: 16px; border-radius: 12px;">
-            ⚠️ <strong>Prediction Error:</strong> {e}
+        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #EF4444; color: #FCA5A5; padding: 16px; border-radius: 12px; font-family: sans-serif;">
+            ⚠️ <strong>Model Execution Notice:</strong> {e}
         </div>
         """
 
 
 # ==========================================
-# Custom High-End Modern Dashboard CSS
+# Custom High-End Styling CSS
 # ==========================================
 
 css = """
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* Global Reset & Dark Mode Theme */
 body, .gradio-container {
-    background: #0B0F17 !important;
+    background-color: #090D16 !important;
     font-family: 'Inter', -apple-system, sans-serif !important;
+    color: #F3F4F6 !important;
 }
 
 /* Glassmorphism Header */
 .main-header {
-    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-    backdrop-filter: blur(20px);
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.6) 100%);
+    backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 28px 24px;
-    border-radius: 20px;
+    padding: 24px;
+    border-radius: 16px;
     text-align: center;
-    margin-bottom: 24px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .main-header h1 {
     color: #FFFFFF !important;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 700;
     letter-spacing: -0.5px;
-    margin: 0 0 8px 0;
+    margin: 0 0 6px 0;
 }
 
 .main-header p {
-    color: #9CA3AF !important;
-    font-size: 15px;
-    margin: 0 0 18px 0;
-}
-
-/* Modern Card Layouts */
-.form-card {
-    background: rgba(255, 255, 255, 0.02) !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    border-radius: 16px !important;
-    padding: 20px !important;
-    margin-bottom: 20px !important;
-    backdrop-filter: blur(10px) !important;
-}
-
-.card-title {
-    color: #10B981;
+    color: #94A3B8 !important;
     font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    margin: 0 0 16px 0;
 }
 
-/* Developer Badge */
+/* Developer Pill Badge */
 .developer-card {
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
     border-radius: 30px;
-    padding: 6px 20px;
+    padding: 6px 18px;
     display: inline-flex;
-    gap: 16px;
+    gap: 14px;
     align-items: center;
 }
 
 .dev-info {
-    color: #D1D5DB;
+    color: #CBD5E1;
     font-size: 13px;
     font-weight: 500;
 }
@@ -344,23 +326,71 @@ body, .gradio-container {
     font-weight: 700;
 }
 
-/* Primary Predict Button */
+/* Form Container Style */
+.form-card {
+    background: rgba(15, 23, 42, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 14px !important;
+    padding: 18px !important;
+    margin-bottom: 16px !important;
+}
+
+.card-title {
+    color: #10B981;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Custom Input Field Integration */
+.gr-box, .gr-input, label {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+input, select, textarea {
+    background-color: #0F172A !important;
+    border: 1px solid #334155 !important;
+    color: #F8FAFC !important;
+    border-radius: 8px !important;
+}
+
+input:focus, select:focus {
+    border-color: #10B981 !important;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
+}
+
+label span {
+    color: #94A3B8 !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Action Predict Button */
 button.primary-btn {
     background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
     color: #FFFFFF !important;
-    border-radius: 12px !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
     padding: 14px !important;
     border: none !important;
-    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3) !important;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3) !important;
     transition: all 0.2s ease !important;
     cursor: pointer !important;
+    width: 100% !important;
 }
 
 button.primary-btn:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 24px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4) !important;
 }
 """
 
@@ -370,7 +400,7 @@ button.primary-btn:hover {
 
 with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
 
-    # Header Header
+    # Main Dashboard Header
     gr.HTML("""
     <div class="main-header">
         <h1>🛡️ Customer Segmentation Intelligence</h1>
@@ -383,14 +413,16 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
     </div>
     """)
 
-    with gr.Row():
-        # Left Panel: Inputs
+    # 2-Column Master Layout
+    with gr.Row(equal_height=False):
+
+        # Left Column: Form Inputs (Width: 3/5)
         with gr.Column(scale=3):
 
-            # Section 1: Financial & Coverage Metrics
+            # Financial & Policy Section
             with gr.Group(elem_classes=["form-card"]):
                 gr.HTML(
-                    '<div class="card-title">💰 Financial & Policy Metrics</div>'
+                    '<div class="card-title">💵 Financial Profile & Coverage</div>'
                 )
                 with gr.Row():
                     age = gr.Slider(
@@ -403,10 +435,10 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                     )
                     premium = gr.Number(label="Premium Amount ($)", value=15000)
 
-            # Section 2: Demographics
+            # Demographics Section
             with gr.Group(elem_classes=["form-card"]):
                 gr.HTML(
-                    '<div class="card-title">👤 Demographic Information</div>'
+                    '<div class="card-title">👤 Demographics & Background</div>'
                 )
                 with gr.Row():
                     gender = gr.Dropdown(
@@ -421,7 +453,7 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                     education = gr.Dropdown(
                         ["High School", "Bachelor", "Master", "PhD"],
                         value="Bachelor",
-                        label="Education",
+                        label="Education Level",
                     )
                     geographic = gr.Dropdown(
                         ["Urban", "Suburban", "Rural"],
@@ -429,10 +461,10 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                         label="Geography",
                     )
 
-            # Section 3: Behaviour & Engagement
+            # Behavioral & Account Profile
             with gr.Group(elem_classes=["form-card"]):
                 gr.HTML(
-                    '<div class="card-title">⚙️ Behavioral & Service Profile</div>'
+                    '<div class="card-title">⚙️ Behavioral & Policy Details</div>'
                 )
                 with gr.Row():
                     occupation = gr.Dropdown(
@@ -456,7 +488,7 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                     behavioral = gr.Dropdown(
                         ["Low", "Medium", "High"],
                         value="Medium",
-                        label="Activity Level",
+                        label="Activity Score",
                     )
                     interaction = gr.Dropdown(
                         ["Low", "Medium", "High"],
@@ -466,30 +498,30 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                     insurance_products = gr.Dropdown(
                         ["1", "2", "3", "4", "5"],
                         value="2",
-                        label="Policies Owned",
+                        label="Products Owned",
                     )
 
-            # Section 4: Preferences
+            # Preferences Section
             with gr.Group(elem_classes=["form-card"]):
                 gr.HTML(
-                    '<div class="card-title">📱 Preferred Communication</div>'
+                    '<div class="card-title">📱 Channel & Interaction Preferences</div>'
                 )
                 with gr.Row():
                     customer_preference = gr.Dropdown(
                         ["Price", "Coverage", "Service", "Benefits"],
                         value="Coverage",
-                        label="Primary Priority",
+                        label="Primary Value Priority",
                     )
                     communication_channel = gr.Dropdown(
                         ["Email", "Phone", "SMS", "Mobile App"],
                         value="Email",
-                        label="Channel",
+                        label="Preferred Channel",
                     )
                 with gr.Row():
                     contact_time = gr.Dropdown(
                         ["Morning", "Afternoon", "Evening"],
                         value="Morning",
-                        label="Contact Time",
+                        label="Preferred Time",
                     )
                     language = gr.Dropdown(
                         ["English", "Hindi", "Spanish", "French"],
@@ -497,40 +529,48 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                         label="Language",
                     )
 
-            # Hidden Inputs
+            # Hidden Constant Input
             purchase_year = gr.Number(value=2024, visible=False)
 
-        # Right Panel: Dynamic KPIs & Prediction Results
+        # Right Column: Output & Real-Time Analytics Panel (Width: 2/5)
         with gr.Column(scale=2):
+
+            # Real-Time Telemetry Bar
             with gr.Group(elem_classes=["form-card"]):
                 gr.HTML(
-                    '<div class="card-title">📊 Real-Time Profile Summary</div>'
+                    '<div class="card-title">📊 Live Telemetry Bar</div>'
                 )
                 live_kpi_display = gr.HTML()
 
+            # Execute Primary Prediction Button
             predict_btn = gr.Button(
-                "⚡ Predict Persona Segment", elem_classes=["primary-btn"]
+                "⚡ Score Customer Segment", elem_classes=["primary-btn"]
             )
 
-            output = gr.HTML(label="Inference Results")
+            # High-Impact Persona Display Output
+            with gr.Group(elem_classes=["form-card"]):
+                gr.HTML(
+                    '<div class="card-title">🎯 Cluster Persona Insights</div>'
+                )
+                output = gr.HTML()
 
     # ==========================
-    # Dynamic Event Wiring
+    # Dynamic Event Listeners
     # ==========================
 
-    # 1. Update Live KPIs dynamically as inputs change
+    # Real-time Telemetry Listener Setup
     kpi_inputs = [income, coverage, premium, interaction]
     for inp in kpi_inputs:
         inp.change(
             fn=update_live_metrics, inputs=kpi_inputs, outputs=live_kpi_display
         )
 
-    # Trigger KPI update on app load
+    # Initial Telemetry Render on Load
     demo.load(
         fn=update_live_metrics, inputs=kpi_inputs, outputs=live_kpi_display
     )
 
-    # 2. Main Prediction Click Event
+    # Prediction Action Listener
     predict_btn.click(
         fn=predict_customer,
         inputs=[
@@ -556,6 +596,6 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
         outputs=output,
     )
 
-# Launch Server
+# Launch Dashboard Application
 if __name__ == "__main__":
     demo.launch(server_name="0.0.0.0", server_port=7860)
