@@ -17,6 +17,40 @@ try:
 except Exception as e:
     print(f"Warning: Model file loading failed. ({e})")
 
+# ==========================================
+# Cluster Metadata & Persona Mappings
+# ==========================================
+
+CLUSTER_PERSONAS = {
+    0: {
+        "title": "💎 High-Value Loyalists",
+        "description": "High-income customers with premium coverage policies. Highly engaged with minimal churn risk.",
+        "badge_color": "#059669",  # Emerald Green
+        "bg_color": "#ECFDF5",
+        "recommendation": "Cross-sell premium wealth management products and offer exclusive VIP loyalty rewards.",
+    },
+    1: {
+        "title": "🎓 Young Digital Budget Seekers",
+        "description": "Younger demographic looking for cost-effective basic coverage with digital-first interaction preferences.",
+        "badge_color": "#0284C7",  # Sky Blue
+        "bg_color": "#F0F9FF",
+        "recommendation": "Offer flexible pay-as-you-go insurance options via mobile app and SMS notifications.",
+    },
+    2: {
+        "title": "🛡️ Family Protection Focused",
+        "description": "Mid-age married individuals prioritizing comprehensive health, vehicle, and life coverage for dependents.",
+        "badge_color": "#7C3AED",  # Purple
+        "bg_color": "#F5F3FF",
+        "recommendation": "Promote bundled family coverage packages and long-term savings plans.",
+    },
+    3: {
+        "title": "⚠️ High-Service Demand Segment",
+        "description": "Frequent customer service interactions with moderate policy spend and higher retention sensitivity.",
+        "badge_color": "#DC2626",  # Red
+        "bg_color": "#FEF2F2",
+        "recommendation": "Assign dedicated customer support reps to resolve inquiries quickly and offer targeted renewal discounts.",
+    },
+}
 
 # ==========================
 # Prediction Function
@@ -44,7 +78,7 @@ def predict_customer(
     language,
 ):
     try:
-        # Numerical Features DataFrame
+        # Prepare Numerical Features
         numeric_df = pd.DataFrame(
             {
                 "Age": [age],
@@ -54,11 +88,9 @@ def predict_customer(
                 "Purchase Year": [purchase_year],
             }
         )
-
-        # Scale Numerical Features
         scaled_numeric = scaler.transform(numeric_df)
 
-        # Categorical Features DataFrame
+        # Prepare Categorical Features
         categorical_df = pd.DataFrame(
             {
                 "Gender": [gender],
@@ -78,21 +110,75 @@ def predict_customer(
         )
 
         # Merge Numeric + Categorical
-        X = np.concatenate(
-            [scaled_numeric, categorical_df.values], axis=1
+        X = np.concatenate([scaled_numeric, categorical_df.values], axis=1)
+
+        # Predict Cluster Index
+        cluster_id = int(model.predict(X, categorical=categorical_indices)[0])
+
+        # Retrieve Persona Profile
+        persona = CLUSTER_PERSONAS.get(
+            cluster_id,
+            {
+                "title": f"Cluster {cluster_id + 1} Segment",
+                "description": "Standard profile matching default cluster characteristics.",
+                "badge_color": "#2563EB",
+                "bg_color": "#EFF6FF",
+                "recommendation": "Apply standard customer engagement and marketing strategy.",
+            },
         )
 
-        # Predict Cluster
-        cluster = model.predict(X, categorical=categorical_indices)[0]
+        # Generate Rich HTML Persona Card Output
+        html_output = f"""
+        <div style="
+            background-color: {persona['bg_color']}; 
+            border: 2px solid {persona['badge_color']}; 
+            border-radius: 12px; 
+            padding: 22px; 
+            margin-top: 10px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        ">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                <span style="
+                    background-color: {persona['badge_color']}; 
+                    color: white; 
+                    font-size: 14px; 
+                    font-weight: 700; 
+                    padding: 5px 14px; 
+                    border-radius: 20px;
+                ">
+                    Cluster {cluster_id + 1}
+                </span>
+                <span style="color: #6B7280; font-size: 13px; font-weight: 600;">Prediction Complete</span>
+            </div>
 
-        return f"🎯 Predicted Customer Segment : Cluster {cluster + 1}"
+            <h2 style="color: #111827; font-size: 24px; font-weight: 700; margin: 0 0 8px 0;">
+                {persona['title']}
+            </h2>
+            
+            <p style="color: #374151; font-size: 15px; margin: 0 0 16px 0; line-height: 1.5;">
+                {persona['description']}
+            </p>
+
+            <hr style="border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 14px 0;">
+
+            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                <span style="font-size: 20px;">💡</span>
+                <div>
+                    <strong style="color: #111827; font-size: 15px;">Target Business Strategy:</strong>
+                    <p style="color: #4B5563; font-size: 14px; margin: 4px 0 0 0; line-height: 1.4;">{persona['recommendation']}</p>
+                </div>
+            </div>
+        </div>
+        """
+        return html_output
 
     except Exception as e:
-        return f"Error : {e}"
+        return f"<div style='color:red; font-weight:bold; padding:10px;'>Error processing prediction: {e}</div>"
 
 
 # ==========================
-# Modern Custom CSS
+# Custom Dashboard CSS
 # ==========================
 
 css = """
@@ -101,7 +187,7 @@ body, .gradio-container {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
-/* Dashboard Header */
+/* Main Dashboard Header */
 .main-header {
     background: #1B2127;
     padding: 24px 20px;
@@ -153,7 +239,7 @@ body, .gradio-container {
     font-weight: 700;
 }
 
-/* Form Container Sections */
+/* Input Form Sections */
 .form-card {
     background: #FFFFFF !important;
     padding: 18px !important;
@@ -168,18 +254,13 @@ label span {
     font-size: 13px !important;
 }
 
-/* Inputs Styling */
-input, select, .single-select {
-    border-radius: 8px !important;
-    border: 1px solid #D1D5DB !important;
-}
-
 /* Submit Button */
 button.primary-btn {
     background: #374151 !important;
     color: #FFFFFF !important;
     border-radius: 10px !important;
-    font-size: 17px !weight: 600 !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
     padding: 12px !important;
     border: 1px solid #4B5563 !important;
     transition: all 0.3s ease;
@@ -189,20 +270,6 @@ button.primary-btn:hover {
     background: #10B981 !important;
     border-color: #10B981 !important;
 }
-
-/* Output Box */
-.result-display {
-    background: #E6F4EA !important;
-    border: 1.5px solid #10B981 !important;
-    border-radius: 10px !important;
-}
-
-.result-display textarea {
-    color: #047857 !important;
-    font-size: 20px !important;
-    font-weight: 700 !important;
-    text-align: left !important;
-}
 """
 
 # ==========================
@@ -211,7 +278,7 @@ button.primary-btn:hover {
 
 with gr.Blocks(css=css, title="Customer Segmentation Analytics") as demo:
 
-    # Header & Developer Badge
+    # Header & Developer Card
     gr.HTML("""
     <div class="main-header">
         <h1>🛡️ Customer Segmentation Analytics Dashboard</h1>
@@ -224,7 +291,7 @@ with gr.Blocks(css=css, title="Customer Segmentation Analytics") as demo:
     </div>
     """)
 
-    # Group 1: Numerical Values Card
+    # Group 1: Numerical Values
     with gr.Group(elem_classes=["form-card"]):
         with gr.Row():
             age = gr.Number(label="Age", value=35)
@@ -232,7 +299,7 @@ with gr.Blocks(css=css, title="Customer Segmentation Analytics") as demo:
             coverage = gr.Number(label="Coverage Amount", value=250000)
             premium = gr.Number(label="Premium Amount", value=15000)
 
-    # Group 2: Demographics Card
+    # Group 2: Demographics
     with gr.Group(elem_classes=["form-card"]):
         with gr.Row():
             gender = gr.Dropdown(
@@ -254,7 +321,7 @@ with gr.Blocks(css=css, title="Customer Segmentation Analytics") as demo:
                 label="Geographic Information",
             )
 
-    # Group 3: Categorical Preferences Card
+    # Group 3: Behavior & Preferences
     with gr.Group(elem_classes=["form-card"]):
         with gr.Row():
             occupation = gr.Dropdown(
@@ -316,22 +383,18 @@ with gr.Blocks(css=css, title="Customer Segmentation Analytics") as demo:
                 label="Preferred Language",
             )
 
-    # Hidden constant input for model mapping
+    # Hidden Constant Input
     purchase_year = gr.Number(value=2024, visible=False)
 
-    # Prediction Trigger
+    # Prediction Action
     predict_btn = gr.Button(
         "Predict Customer Segment", elem_classes=["primary-btn"]
     )
 
-    # Output Card
-    output = gr.Textbox(
-        label="Prediction Result",
-        elem_classes=["result-display"],
-        interactive=False,
-    )
+    # Output Persona Display
+    output = gr.HTML(label="Prediction Result")
 
-    # Connect Trigger
+    # Event Listener
     predict_btn.click(
         fn=predict_customer,
         inputs=[
@@ -357,6 +420,6 @@ with gr.Blocks(css=css, title="Customer Segmentation Analytics") as demo:
         outputs=output,
     )
 
-# Launch Dashboard
+# Launch Server
 if __name__ == "__main__":
     demo.launch(server_name="0.0.0.0", server_port=7860)
