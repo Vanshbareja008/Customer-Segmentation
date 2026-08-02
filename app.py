@@ -28,7 +28,7 @@ CLUSTER_PERSONAS = {
         "description": "High-income customers with premium coverage policies. Highly engaged with minimal churn risk.",
         "badge_color": "#10B981",
         "badge_text_color": "#022C22",
-        "bg_color": "rgba(16, 185, 129, 0.06)",
+        "bg_color": "rgba(16, 185, 129, 0.08)",
         "border_color": "rgba(16, 185, 129, 0.35)",
         "recommendation": "Cross-sell premium wealth management products and offer exclusive VIP loyalty rewards.",
         "retention_score": "96%",
@@ -40,7 +40,7 @@ CLUSTER_PERSONAS = {
         "description": "Younger demographic looking for cost-effective basic coverage with digital-first interaction preferences.",
         "badge_color": "#38BDF8",
         "badge_text_color": "#0C4A6E",
-        "bg_color": "rgba(56, 189, 248, 0.06)",
+        "bg_color": "rgba(56, 189, 248, 0.08)",
         "border_color": "rgba(56, 189, 248, 0.35)",
         "recommendation": "Offer flexible pay-as-you-go insurance options via mobile app and SMS notifications.",
         "retention_score": "74%",
@@ -52,7 +52,7 @@ CLUSTER_PERSONAS = {
         "description": "Mid-age married individuals prioritizing comprehensive health, vehicle, and life coverage for dependents.",
         "badge_color": "#A78BFA",
         "badge_text_color": "#2E1065",
-        "bg_color": "rgba(167, 139, 250, 0.06)",
+        "bg_color": "rgba(167, 139, 250, 0.08)",
         "border_color": "rgba(167, 139, 250, 0.35)",
         "recommendation": "Promote bundled family coverage packages and long-term savings plans.",
         "retention_score": "88%",
@@ -64,7 +64,7 @@ CLUSTER_PERSONAS = {
         "description": "Frequent customer service interactions with moderate policy spend and higher retention sensitivity.",
         "badge_color": "#F87171",
         "badge_text_color": "#450A0A",
-        "bg_color": "rgba(248, 113, 113, 0.06)",
+        "bg_color": "rgba(248, 113, 113, 0.08)",
         "border_color": "rgba(248, 113, 113, 0.35)",
         "recommendation": "Assign dedicated customer support reps to resolve inquiries quickly and offer targeted renewal discounts.",
         "retention_score": "52%",
@@ -93,17 +93,17 @@ def update_live_metrics(income, coverage, premium, interaction):
 
     summary_html = f"""
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 5px;">
-        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.06); padding: 12px 10px; border-radius: 12px; text-align: center;">
+        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.08); padding: 12px 10px; border-radius: 12px; text-align: center;">
             <div style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Premium / Coverage Ratio</div>
-            <div style="color: #38BDF8; font-size: 20px; font-weight: 700; margin-top: 4px;">{loss_ratio}%</div>
+            <div style="color: #38BDF8; font-size: 18px; font-weight: 700; margin-top: 4px;">{loss_ratio}%</div>
         </div>
-        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.06); padding: 12px 10px; border-radius: 12px; text-align: center;">
-            <div style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Service Touch level</div>
-            <div style="color: #FBBF24; font-size: 18px; font-weight: 700; margin-top: 5px;">{interaction}</div>
+        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.08); padding: 12px 10px; border-radius: 12px; text-align: center;">
+            <div style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Service Touch Level</div>
+            <div style="color: #FBBF24; font-size: 16px; font-weight: 700; margin-top: 5px;">{interaction}</div>
         </div>
-        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.06); padding: 12px 10px; border-radius: 12px; text-align: center;">
+        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.08); padding: 12px 10px; border-radius: 12px; text-align: center;">
             <div style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Retention Radar</div>
-            <div style="color: {risk_color}; font-size: 15px; font-weight: 700; margin-top: 6px;">{risk_label}</div>
+            <div style="color: {risk_color}; font-size: 14px; font-weight: 700; margin-top: 6px;">{risk_label}</div>
         </div>
     </div>
     """
@@ -136,7 +136,6 @@ def predict_customer(
     language,
 ):
     try:
-        # Prepare Numerical Features
         numeric_df = pd.DataFrame(
             {
                 "Age": [age],
@@ -148,7 +147,6 @@ def predict_customer(
         )
         scaled_numeric = scaler.transform(numeric_df)
 
-        # Prepare Categorical Features
         categorical_df = pd.DataFrame(
             {
                 "Gender": [gender],
@@ -167,13 +165,9 @@ def predict_customer(
             }
         )
 
-        # Merge Numeric + Categorical
         X = np.concatenate([scaled_numeric, categorical_df.values], axis=1)
-
-        # Predict Cluster Index
         cluster_id = int(model.predict(X, categorical=categorical_indices)[0])
 
-        # Retrieve Persona Profile
         persona = CLUSTER_PERSONAS.get(
             cluster_id,
             {
@@ -182,7 +176,7 @@ def predict_customer(
                 "description": "Standard profile matching default cluster characteristics.",
                 "badge_color": "#3B82F6",
                 "badge_text_color": "#1E3A8A",
-                "bg_color": "rgba(59, 130, 246, 0.06)",
+                "bg_color": "rgba(59, 130, 246, 0.08)",
                 "border_color": "rgba(59, 130, 246, 0.35)",
                 "recommendation": "Apply standard customer engagement and marketing strategy.",
                 "retention_score": "80%",
@@ -190,7 +184,6 @@ def predict_customer(
             },
         )
 
-        # Dashboard Persona Card Output HTML (Dark-Theme Harmonized)
         html_output = f"""
         <div style="
             background: {persona['bg_color']}; 
@@ -198,16 +191,15 @@ def predict_customer(
             border-radius: 16px; 
             padding: 22px; 
             margin-top: 8px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
             backdrop-filter: blur(12px);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
         ">
-            <!-- Top Status Bar -->
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
                 <span style="
                     background-color: {persona['badge_color']}; 
                     color: {persona['badge_text_color']}; 
-                    font-size: 12px; 
+                    font-size: 11px; 
                     font-weight: 800; 
                     letter-spacing: 0.6px;
                     padding: 5px 14px; 
@@ -216,14 +208,13 @@ def predict_customer(
                 ">
                     Cluster {cluster_id + 1} Assigned
                 </span>
-                <span style="color: #64748B; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                <span style="color: #64748B; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
                     <span style="height: 8px; width: 8px; background-color: #10B981; border-radius: 50%; display: inline-block;"></span>
                     Scoring Engine Active
                 </span>
             </div>
 
-            <!-- Header Info -->
-            <h2 style="color: #E2E8F0; font-size: 24px; font-weight: 700; margin: 0 0 4px 0; letter-spacing: -0.5px;">
+            <h2 style="color: #F8FAFC; font-size: 22px; font-weight: 700; margin: 0 0 4px 0; letter-spacing: -0.5px;">
                 {persona['title']}
             </h2>
             <div style="color: {persona['badge_color']}; font-size: 13px; font-weight: 600; margin-bottom: 14px;">
@@ -234,13 +225,12 @@ def predict_customer(
                 {persona['description']}
             </p>
 
-            <!-- Key Persona Metrics Grid -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
-                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 12px;">
+                <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.08); padding: 14px; border-radius: 12px;">
                     <span style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Predicted Retention Rate</span>
                     <span style="color: #38BDF8; font-size: 20px; font-weight: 700;">{persona['retention_score']}</span>
                 </div>
-                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 12px;">
+                <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.08); padding: 14px; border-radius: 12px;">
                     <span style="color: #64748B; font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Segment Profitability Tier</span>
                     <span style="color: #34D399; font-size: 20px; font-weight: 700;">{persona['value_tier']}</span>
                 </div>
@@ -248,12 +238,11 @@ def predict_customer(
 
             <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 18px 0;">
 
-            <!-- Strategy Recommendation -->
-            <div style="display: flex; gap: 14px; align-items: flex-start; background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 12px; border-left: 4px solid {persona['badge_color']};">
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: rgba(15, 23, 42, 0.7); padding: 16px; border-radius: 12px; border-left: 4px solid {persona['badge_color']};">
                 <span style="font-size: 20px; line-height: 1;">💡</span>
                 <div>
-                    <strong style="color: #CBD5E1; font-size: 13px; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Recommended Action Plan:</strong>
-                    <p style="color: #94A3B8; font-size: 14px; margin: 0; line-height: 1.5;">{persona['recommendation']}</p>
+                    <strong style="color: #CBD5E1; font-size: 12px; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Recommended Action Plan:</strong>
+                    <p style="color: #94A3B8; font-size: 13.5px; margin: 0; line-height: 1.5;">{persona['recommendation']}</p>
                 </div>
             </div>
         </div>
@@ -269,54 +258,130 @@ def predict_customer(
 
 
 # ==========================================
-# Custom Full Dark Theme CSS (Zero White Elements)
+# Gradio Variable Direct Overrides & CSS Fix
 # ==========================================
 
 css = """
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Global Reset & Dark Theme Base */
-body, .gradio-container, .main {
+/* Force Gradio Engine CSS Variables to Dark Tones */
+:root, .dark, body {
+    --background-fill-primary: #070A10 !important;
+    --background-fill-secondary: #0F172A !important;
+    --block-background-fill: #0F172A !important;
+    --block-border-color: #1E293B !important;
+    --border-color-primary: #1E293B !important;
+    --border-color-accent: #10B981 !important;
+    --body-text-color: #CBD5E1 !important;
+    --block-label-text-color: #64748B !important;
+    --input-background-fill: #0F172A !important;
+    --input-border-color: #1E293B !important;
+    --block-radius: 14px !important;
+    --container-radius: 14px !important;
+    --input-radius: 10px !important;
+    --radius-sm: 8px !important;
+    --radius-md: 12px !important;
+    --radius-lg: 16px !important;
+}
+
+/* Global Background Override */
+body, .gradio-container, .main, div.gradio-container {
     background-color: #070A10 !important;
     font-family: 'Inter', -apple-system, sans-serif !important;
     color: #CBD5E1 !important;
 }
 
-/* Glassmorphism Header Bar */
+/* Remove All Box-Shadow & Square Edges from Containers */
+.block, .form, .gr-form, div[class*="block"], div[class*="form"] {
+    background-color: #0F172A !important;
+    border: 1px solid #1E293B !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+}
+
+/* Rounded Input Controls (Number, Text, Select) */
+input, select, textarea, .gr-input, input[type="number"], input[type="text"] {
+    background-color: #070A10 !important;
+    border: 1px solid #1E293B !important;
+    color: #F8FAFC !important;
+    border-radius: 10px !important;
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+}
+
+/* Focus Glow Effects */
+input:focus, select:focus, textarea:focus {
+    border-color: #10B981 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Override Dropdown Outer Wrappers */
+.gr-dropdown, .gr-dropdown *, fieldset {
+    background-color: #0F172A !important;
+    border-color: #1E293B !important;
+    border-radius: 10px !important;
+    color: #CBD5E1 !important;
+}
+
+/* Dropdown Options Popup List */
+ul.options, .options, .dropdown-options, ul[role="listbox"] {
+    background-color: #0F172A !important;
+    border: 1px solid #1E293B !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
+}
+
+li.item, .option, li[role="option"] {
+    background-color: #0F172A !important;
+    color: #CBD5E1 !important;
+    border-radius: 6px !important;
+    margin: 2px 4px !important;
+}
+
+li.item:hover, .option:hover, li[role="option"]:hover {
+    background-color: #1E293B !important;
+    color: #34D399 !important;
+}
+
+/* Label Styling */
+label span, div[data-testid="block-label"] {
+    color: #64748B !important;
+    font-weight: 600 !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.6px !important;
+    background: transparent !important;
+}
+
+/* Header Container */
 .main-header {
-    background: linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.5) 100%);
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.6) 100%);
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 24px;
     border-radius: 16px;
     text-align: center;
     margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .main-header h1 {
-    color: #E2E8F0 !important;
+    color: #F8FAFC !important;
     font-size: 28px;
     font-weight: 700;
-    letter-spacing: -0.5px;
     margin: 0 0 6px 0;
 }
 
-.main-header p {
-    color: #64748B !important;
-    font-size: 14px;
-    margin: 0 0 16px 0;
-}
-
-/* Developer Pill Badge */
 .developer-card {
     background: rgba(16, 185, 129, 0.08);
     border: 1px solid rgba(16, 185, 129, 0.2);
     border-radius: 30px;
     padding: 6px 18px;
     display: inline-flex;
-    gap: 14px;
+    gap: 12px;
     align-items: center;
+    margin-top: 10px;
 }
 
 .dev-info {
@@ -330,15 +395,7 @@ body, .gradio-container, .main {
     font-weight: 700;
 }
 
-/* Form Container Style */
-.form-card {
-    background: rgba(15, 23, 42, 0.4) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    border-radius: 14px !important;
-    padding: 18px !important;
-    margin-bottom: 16px !important;
-}
-
+/* Custom Inner Form Title */
 .card-title {
     color: #34D399;
     font-size: 12px;
@@ -351,64 +408,21 @@ body, .gradio-container, .main {
     gap: 6px;
 }
 
-/* Complete Dark Control Component Overrides */
-.gr-box, .gr-input, label, fieldset {
-    background-color: transparent !important;
-    border: none !important;
-}
-
-input, select, textarea, .gr-dropdown {
-    background-color: #0F172A !important;
-    border: 1px solid #1E293B !important;
-    color: #CBD5E1 !important;
-    border-radius: 8px !important;
-}
-
-/* Dropdown Menu Item Styling */
-ul.options, .gr-dropdown-options {
-    background-color: #0F172A !important;
-    border: 1px solid #1E293B !important;
-    color: #CBD5E1 !important;
-}
-
-li.item, .gr-dropdown-option {
-    background-color: #0F172A !important;
-    color: #CBD5E1 !important;
-}
-
-li.item:hover, .gr-dropdown-option:hover {
-    background-color: #1E293B !important;
-    color: #34D399 !important;
-}
-
-input:focus, select:focus {
-    border-color: #10B981 !important;
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.15) !important;
-}
-
-label span {
-    color: #64748B !important;
-    font-weight: 600 !important;
-    font-size: 11px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-}
-
-/* Dark Theme Range Slider */
+/* Range Sliders */
 input[type="range"] {
     accent-color: #10B981 !important;
 }
 
-/* Action Predict Button */
+/* Primary Scoring Button */
 button.primary-btn {
     background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
     color: #022C22 !important;
-    border-radius: 10px !important;
+    border-radius: 12px !important;
     font-size: 15px !important;
     font-weight: 700 !important;
     padding: 14px !important;
     border: none !important;
-    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25) !important;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3) !important;
     transition: all 0.2s ease !important;
     cursor: pointer !important;
     width: 100% !important;
@@ -416,7 +430,7 @@ button.primary-btn {
 
 button.primary-btn:hover {
     transform: translateY(-1px) !important;
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35) !important;
+    box-shadow: 0 6px 24px rgba(16, 185, 129, 0.4) !important;
 }
 """
 
@@ -424,13 +438,15 @@ button.primary-btn:hover {
 # Gradio Interface Setup
 # ==========================
 
-with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
+with gr.Blocks(
+    css=css, theme=gr.themes.Dark(), title="Customer Analytics AI Engine"
+) as demo:
 
     # Main Dashboard Header
     gr.HTML("""
     <div class="main-header">
         <h1>🛡️ Customer Segmentation Intelligence</h1>
-        <p>Enterprise Machine Learning Dashboard for Real-Time Persona Scoring</p>
+        <p style="color: #64748B; margin: 0;">Enterprise Machine Learning Dashboard for Real-Time Persona Scoring</p>
         <div class="developer-card">
             <div class="dev-info">Developer: <span>Vansh Bareja</span></div>
             <div class="dev-info">•</div>
@@ -442,11 +458,11 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
     # 2-Column Master Layout
     with gr.Row(equal_height=False):
 
-        # Left Column: Form Inputs (Width: 3/5)
+        # Left Column: Inputs (Width: 3/5)
         with gr.Column(scale=3):
 
             # Financial & Policy Section
-            with gr.Group(elem_classes=["form-card"]):
+            with gr.Group():
                 gr.HTML(
                     '<div class="card-title">💵 Financial Profile & Coverage</div>'
                 )
@@ -462,7 +478,7 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                     premium = gr.Number(label="Premium Amount ($)", value=15000)
 
             # Demographics Section
-            with gr.Group(elem_classes=["form-card"]):
+            with gr.Group():
                 gr.HTML(
                     '<div class="card-title">👤 Demographics & Background</div>'
                 )
@@ -487,8 +503,8 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                         label="Geography",
                     )
 
-            # Behavioral & Account Profile
-            with gr.Group(elem_classes=["form-card"]):
+            # Behavioral Section
+            with gr.Group():
                 gr.HTML(
                     '<div class="card-title">⚙️ Behavioral & Policy Details</div>'
                 )
@@ -528,7 +544,7 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                     )
 
             # Preferences Section
-            with gr.Group(elem_classes=["form-card"]):
+            with gr.Group():
                 gr.HTML(
                     '<div class="card-title">📱 Channel & Interaction Preferences</div>'
                 )
@@ -555,46 +571,36 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
                         label="Language",
                     )
 
-            # Hidden Constant Input
             purchase_year = gr.Number(value=2024, visible=False)
 
-        # Right Column: Output & Real-Time Analytics Panel (Width: 2/5)
+        # Right Column: Analytics & Output (Width: 2/5)
         with gr.Column(scale=2):
 
-            # Real-Time Telemetry Bar
-            with gr.Group(elem_classes=["form-card"]):
+            with gr.Group():
                 gr.HTML('<div class="card-title">📊 Live Telemetry Bar</div>')
                 live_kpi_display = gr.HTML()
 
-            # Execute Primary Prediction Button
             predict_btn = gr.Button(
                 "⚡ Score Customer Segment", elem_classes=["primary-btn"]
             )
 
-            # Persona Display Output
-            with gr.Group(elem_classes=["form-card"]):
+            with gr.Group():
                 gr.HTML(
                     '<div class="card-title">🎯 Cluster Persona Insights</div>'
                 )
                 output = gr.HTML()
 
-    # ==========================
-    # Dynamic Event Listeners
-    # ==========================
-
-    # Real-time Telemetry Listener Setup
+    # Event Listeners
     kpi_inputs = [income, coverage, premium, interaction]
     for inp in kpi_inputs:
         inp.change(
             fn=update_live_metrics, inputs=kpi_inputs, outputs=live_kpi_display
         )
 
-    # Initial Telemetry Render on Load
     demo.load(
         fn=update_live_metrics, inputs=kpi_inputs, outputs=live_kpi_display
     )
 
-    # Prediction Action Listener
     predict_btn.click(
         fn=predict_customer,
         inputs=[
@@ -620,6 +626,5 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
         outputs=output,
     )
 
-# Launch Dashboard Application
 if __name__ == "__main__":
     demo.launch(server_name="0.0.0.0", server_port=7860)
