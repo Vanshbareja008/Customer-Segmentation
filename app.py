@@ -423,9 +423,9 @@ with gr.Blocks(css=css, title="Customer Analytics AI Engine") as demo:
         <h1>🛡️ Customer Segmentation Intelligence</h1>
         <p style="color: #6B564E; margin: 0; font-weight: 600;">Enterprise Machine Learning Dashboard for Real-Time Persona Scoring</p>
         <div class="developer-card">
-            <div class="dev-info">Developer: <span>Vansh Bareja</span></div>
+            <div class="dev-info">Developer: <span>Vansh, Sameer, Dishika</span></div>
             <div class="dev-info">•</div>
-            <div class="dev-info">Roll No: <span>241047</span></div>
+            <div class="dev-info">Roll No: <span>241047, 241020, 241046</span></div>
         </div>
     </div>
     """)
